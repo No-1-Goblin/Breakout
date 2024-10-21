@@ -33,3 +33,5 @@ fire ball (green)
 
 # Time Details and Changelist
 <Add information to this section about the time you've taken for this task along with a professional changelist.>
+* Fixed compiler issue caused by circular includes
+* Added basic screen shake effect when a life is lost

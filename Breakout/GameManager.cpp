@@ -6,7 +6,7 @@
 GameManager::GameManager(sf::RenderWindow* window)
     : _window(window), _paddle(nullptr), _ball(nullptr), _brickManager(nullptr), _powerupManager(nullptr),
     _messagingSystem(nullptr), _ui(nullptr), _pause(false), _time(0.f), _lives(3), _pauseHold(0.f), _levelComplete(false),
-    _powerupInEffect({ none,0.f }), _timeLastPowerupSpawned(0.f)
+    _powerupInEffect({ none,0.f }), _timeLastPowerupSpawned(0.f), _shakeTime(0.f)
 {
     _font.loadFromFile("font/montS.ttf");
     _masterText.setFont(_font);
@@ -69,6 +69,12 @@ void GameManager::update(float dt)
 
     // timer.
     _time += dt;
+    if (_shakeTime > 0) {
+        _shakeTime -= dt;
+        if (_shakeTime < 0) {
+            _shakeTime = 0;
+        }
+    }
 
 
     if (_time > _timeLastPowerupSpawned + POWERUP_FREQUENCY && rand()%700 == 0)      // TODO parameterise
@@ -92,11 +98,16 @@ void GameManager::loseLife()
     _lives--;
     _ui->lifeLost(_lives);
 
-    // TODO screen shake.
+    _shakeTime = 1;
 }
 
 void GameManager::render()
 {
+    if (_shakeTime > 0) {
+        sf::View view = _window->getView();
+        view.setCenter(sf::Vector2f(500 + sinf(10 * _shakeTime) * 10, 400 + sinf(10 * _shakeTime) * 10));
+        _window->setView(view);
+    }
     _paddle->render();
     _ball->render();
     _brickManager->render();
