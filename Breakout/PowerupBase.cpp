@@ -10,6 +10,10 @@ PowerupBase::PowerupBase(sf::RenderWindow* window, Paddle* paddle, Ball* ball)
     _sprite.setRadius(RADIUS);
     _isAlive = true;
     _ball = ball;
+    for (int i = 0; i < 3; i++) {
+        _colours[i] = rand() % 255;
+        _colourChangeDir[i] = rand() % 2 == 1 ? 1 : -1;
+    }
 
     // Initial position and direction with some variability
     float initialX = rand() % window->getSize().x * 0.9 + window->getSize().x * 0.05;
@@ -33,13 +37,20 @@ void PowerupBase::update(float dt)
     // Move the power-up
     _sprite.move(_direction.x * dt, _direction.y * dt);
 
-    //// Smooth color changes
-    //for (int i = 0; i < _colours.size(); ++i)
-    //{
-    //    _colours[i] += 50 * dt; // Increment smoothly over time
-    //    if (_colours[i] > 255) _colours[i] -= 255; // Wrap around to stay within valid range
-    //}
-    //_sprite.setFillColor(sf::Color(static_cast<sf::Uint8>(_colours[0]), static_cast<sf::Uint8>(_colours[1]), static_cast<sf::Uint8>(_colours[2]), 255));
+    // Smooth color changes
+    for (int i = 0; i < 3; ++i)
+    {
+        _colours[i] += 50 * dt * _colourChangeDir[i]; // Increment smoothly over time
+        if (_colours[i] > 255) {
+            _colours[i] = 255;
+            _colourChangeDir[i] = -1; // Reverse colour change direction
+        }
+        else if (_colours[i] < 0) {
+            _colours[i] = 0;
+            _colourChangeDir[i] = 1; // Reverse colour change direction
+        }
+    }
+    _sprite.setFillColor(sf::Color(static_cast<sf::Uint8>(_colours[0]), static_cast<sf::Uint8>(_colours[1]), static_cast<sf::Uint8>(_colours[2]), 255));
 
     // Collide with floor (i.e., was missed)
     if (_sprite.getPosition().y + RADIUS * 2 >= _window->getSize().y)

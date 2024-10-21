@@ -34,10 +34,11 @@ protected: // Protected so derived classes can access these members
     Paddle* _paddle;
     Ball* _ball;
     sf::Vector2f _direction;
+    float _colours[3];
+    int _colourChangeDir[3];
 
     // Render
     sf::CircleShape _sprite;
     sf::Color _colour;
     sf::RenderWindow* _window;
-
 };
