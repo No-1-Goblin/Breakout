@@ -45,7 +45,7 @@ void Ball::update(float dt)
 
     // check bounds and bounce
     sf::Vector2f position = _sprite.getPosition();
-    sf::Vector2u windowDimensions = _window->getSize();
+    sf::Vector2u windowDimensions = sf::Vector2u(_window->getView().getSize().x, _window->getView().getSize().y);
 
     // bounce on walls
     if ((position.x >= windowDimensions.x - 2 * RADIUS && _direction.x > 0) || (position.x <= 0 && _direction.x < 0))

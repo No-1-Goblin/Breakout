@@ -10,9 +10,9 @@ void BrickManager::createBricks(int rows, int cols, float brickWidth, float bric
 {
     float leftEdge;
     if (cols % 2 == 0) 
-        leftEdge = _window->getSize().x / 2 - ((cols / 2.0f) * brickWidth + (cols / 2.0f - 0.5f) * spacing);
+        leftEdge = _window->getView().getSize().x / 2 - ((cols / 2.0f) * brickWidth + (cols / 2.0f - 0.5f) * spacing);
     else
-        leftEdge = _window->getSize().x / 2 - ((cols / 2.0f - 0.5f) * brickWidth + (cols / 2.0f) * spacing);
+        leftEdge = _window->getView().getSize().x / 2 - ((cols / 2.0f - 0.5f) * brickWidth + (cols / 2.0f) * spacing);
 
     for (int i = 0; i < rows; ++i) {
         for (int j = 0; j < cols; ++j) {

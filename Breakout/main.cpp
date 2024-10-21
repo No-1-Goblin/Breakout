@@ -6,6 +6,8 @@ int main()
 {
     srand(time(0));
     sf::RenderWindow window(sf::VideoMode(1000, 800), "Breakout");
+    sf::View defaultView(sf::FloatRect(sf::Vector2f(0, 0), sf::Vector2f(1000, 800)));
+    window.setView(defaultView);
     GameManager gameManager(&window);
     gameManager.initialize();
 
