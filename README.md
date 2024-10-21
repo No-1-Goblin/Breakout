@@ -36,3 +36,4 @@ fire ball (green)
 * Fixed compiler issue caused by circular includes (5 min)
 * Added basic screen shake effect when a life is lost (10 min)
 * Implemented a seemingly abandoned mechanic of having powerups smoothly change colour over time (15 min)
+* Made the game randomise the RNG seed on launch
