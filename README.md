@@ -38,3 +38,4 @@ fire ball (green)
 * Implemented a seemingly abandoned mechanic of having powerups smoothly change colour over time (15 min)
 * Made the game randomise the RNG seed on launch (2 min)
 * Made the game work regardless of window size (15 min)
+* Spent a lot of time inbetween staring at the code trying to figure out what to change/improve, code tests are definitely somewhere I need to improve
