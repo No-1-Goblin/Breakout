@@ -1,8 +1,8 @@
 #include "Ball.h"
 #include "GameManager.h" // avoid cicular dependencies
 
-Ball::Ball(sf::RenderWindow* window, float velocity, GameManager* gameManager)
-    : _window(window), _velocity(velocity), _gameManager(gameManager),
+Ball::Ball(sf::RenderWindow* window, float velocity, GameManager* gameManager, SoundHandler* soundHandler)
+    : _window(window), _velocity(velocity), _gameManager(gameManager), _soundHandler(soundHandler),
     _timeWithPowerupEffect(0.f), _isFireBall(false), _isAlive(true), _direction({1,1})
 {
     _sprite.setRadius(RADIUS);
@@ -51,12 +51,14 @@ void Ball::update(float dt)
     if ((position.x >= windowDimensions.x - 2 * RADIUS && _direction.x > 0) || (position.x <= 0 && _direction.x < 0))
     {
         _direction.x *= -1;
+        playRandomHitSound();
     }
 
     // bounce on ceiling
     if (position.y <= 0 && _direction.y < 0)
     {
         _direction.y *= -1;
+        playRandomHitSound();
     }
 
     // lose life bounce
@@ -77,6 +79,7 @@ void Ball::update(float dt)
 
         // Adjust position to avoid getting stuck inside the paddle
         _sprite.setPosition(_sprite.getPosition().x, _gameManager->getPaddle()->getBounds().top - 2 * RADIUS);
+        playRandomHitSound();
     }
 
     // collision with bricks
@@ -85,10 +88,12 @@ void Ball::update(float dt)
     if (collisionResponse == 1)
     {
         _direction.x *= -1; // Bounce horizontally
+        playRandomHitSound();
     }
     else if (collisionResponse == 2)
     {
         _direction.y *= -1; // Bounce vertically
+        playRandomHitSound();
     }
 }
 
@@ -113,4 +118,10 @@ void Ball::setFireBall(float duration)
     }
     _isFireBall = false;
     _timeWithPowerupEffect = 0.f;    
+}
+
+void Ball::playRandomHitSound() {
+    int soundNumber = rand() % 4 + 1;
+    std::string soundName = "marimbaHit" + std::to_string(soundNumber);
+    _soundHandler->playSound(soundName);
 }

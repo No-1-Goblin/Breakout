@@ -1,8 +1,8 @@
 #include "PowerupManager.h"
 
 
-PowerupManager::PowerupManager(sf::RenderWindow* window, Paddle* paddle, Ball* ball)
-    : _window(window), _paddle(paddle), _ball(ball)
+PowerupManager::PowerupManager(sf::RenderWindow* window, Paddle* paddle, Ball* ball, SoundHandler* soundHandler)
+    : _window(window), _paddle(paddle), _ball(ball), _soundHandler(soundHandler)
 {
 }
 
@@ -90,6 +90,7 @@ void PowerupManager::checkCollision()
         {
             _powerupInEffect = powerup->applyEffect();
             powerup->setAlive(false);
+            _soundHandler->playSound("powerup");
         }
     }
 }

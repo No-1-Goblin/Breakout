@@ -7,12 +7,13 @@
 #include "PowerupManager.h"
 #include "MessagingSystem.h"
 #include "UI.h"
+#include "SoundHandler.h"
 
 
 
 class GameManager {
 public:
-    GameManager(sf::RenderWindow* window);
+    GameManager(sf::RenderWindow* window, SoundHandler* soundHandler);
     void initialize();
     void update(float dt);
     void loseLife();
@@ -40,6 +41,7 @@ private:
     sf::Text _masterText;
 
     sf::RenderWindow* _window;
+    SoundHandler* _soundHandler;
     Paddle* _paddle;
     Ball* _ball;
     BrickManager* _brickManager;
